@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutoring Package</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .codes-section {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .codes {
+            list-style-type: none;
+            padding: 0;
+        }
+        .codes li {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tutoring Package</h1>
+            <a href="https://tutor.setasync.me" class="btn btn-primary">More Info</a>
+        </div>
+        <div class="content">
+            <p>Use the button at the bottom of this page to visit the booking portal in a new tab, select a date and time, and on the final page enter one of your codes to remove any charge.</p>
+            <p>Use a new code each time until you have none left, they will expire after use.</p>
+			<p>Please use the same account for each booking, or I will loose track of my student notes.</p>
+            <div class="codes-section">
+                <h2 id="package-title">Adrian's Package</h2>
+                <ul id="codes-list" class="codes">
+                    <!-- Codes will be inserted here by JavaScript -->
+                </ul>
+            </div>
+        </div>
+        <div class="footer mt-5">
+            <button class="btn btn-success" onclick="openPortal()">Visit Portal</button>
+        </div>
+    </div>
+
+    <script>
+        function openPortal() {
+            window.open('http://book.setasync.me', '_blank'); // Replace with actual portal URL
+        }
+
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const packageTitle = params.get('title') || "Untitled Package";
+            const codes = params.get('codes') ? params.get('codes').split(',') : ["No codes provided"];
+            return { packageTitle, codes };
+        }
+
+        function updateContent() {
+            const { packageTitle, codes } = getUrlParams();
+            document.getElementById('package-title').textContent = packageTitle;
+            const codesList = document.getElementById('codes-list');
+            codesList.innerHTML = '';
+            codes.forEach(code => {
+                const li = document.createElement('li');
+                li.textContent = code;
+                codesList.appendChild(li);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', updateContent);
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
